@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  app:
+    restart: "no"
+
+
+  nginx:
+    restart: "no"
+
+
+  certbot:
+    restart: "no"
+
+
+  mariadb:
+    restart: "no"
+
+
+  adminer:
+    restart: "no"
+
+
+  sftp:
+    restart: "no"

@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/www/temp
+/docker/*.local*
+/docker/nginx/nginx.conf
+/docker-compose.override.yml
+/.env

@@ -1,0 +1,69 @@
+application:
+    catchExceptions: ::getenv('NETTE_CATCH_EXCEPTIONS')
+    errorPresenter: Base:Error
+    mapping:
+        App: Wakers\App\Presenter\*Presenter
+        *: Wakers\*Module\Presenter\*Presenter
+    scanDirs:
+        - %appDir%/../vendor/wakers
+    scanComposer: false
+
+
+http:
+    frames: true
+    headers:
+        X-Powered-By: 'Wakers CMS 5'
+
+tracy:
+    email: ::getenv('MAIL_ADMIN')
+    editor: 'phpstorm://open?file=%file&line=%line'
+    editorMapping:
+        /in-docker: /Users/jzapletal/www/cms5-sandbox
+
+session:
+    #autoStart: true
+    expiration: 2 hours
+
+
+services:
+    IPrinterRepository: Wakers\App\Repository\PrinterRepository
+
+    mail.mailer: Wakers\BaseModule\Debugger\SmtpMailer(%smtp%)
+    routerFactory: Wakers\BaseModule\Router\RouterFactory(%adminModules%)
+    router: @routerFactory::createRouter
+
+
+parameters:
+
+    baseDomain: ::getenv('BASE_DOMAIN') # Kvůli přesměrování starých URL
+
+    adminLang: cs # defaultní jazyk administrace
+
+    adminModules: # moduly dostupné v site-manageru (přes routu)
+        - base
+        - user
+        #- mini-shop
+
+    adminNavBar: # navigační menu v site-manageru
+        #- mini-shop-module/src/component/Admin/NavBar/templates/minishop.latte
+
+    frontendDashboard:
+        - cms-user-module/src/Component/Frontend/DashboardModal/templates/aboutUser.latte
+        - cms-onpage-module/src/Component/Frontend/DashboardModal/templates/onPageBoxes.latte
+        - cms-page-module/src/Component/Frontend/DashboardModal/templates/pageBoxes.latte
+        - cms-user-module/src/Component/Frontend/DashboardModal/templates/userBoxes.latte
+        - cms-category-module/src/Component/Frontend/DashboardModal/templates/categoryBoxes.latte
+        - cms-structure-module/src/Component/Frontend/DashboardModal/templates/structureBoxes.latte
+        - cms-lang-module/src/Component/Frontend/DashboardModal/templates/langBoxes.latte
+
+includes:
+    - smtp.local.neon
+
+    # wakers-modules
+    - ./../../vendor/wakers/cms-base-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-user-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-onpage-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-page-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-lang-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-category-module/src/config/config.neon
+    - ./../../vendor/wakers/cms-structure-module/src/config/config.neon

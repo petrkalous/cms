@@ -1,0 +1,25 @@
+{**
+ * Copyright (c) 2018 Wakers.cz
+ *
+ * @author Jiří Zapletal (http://www.wakers.cz, zapletal@wakers.cz)
+ *
+ *}
+
+{block content}
+
+<h2>Aktuality</h2>
+
+{snippet sp-21}
+    {control structurePrinter [
+        'method' => 'findByCategorySlugs',
+        'params' => [
+            'categorySlugs' => [
+                'aktuality'
+            ],
+            'paginationLimit' => 1,
+            'sort' => 'DESC',
+            'filterByPagePublished' => TRUE
+        ],
+        'template' => 'dynamic/homepageNews.latte'
+    ]}
+{/snippet}
